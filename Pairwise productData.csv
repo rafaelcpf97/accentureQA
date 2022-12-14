@@ -1,0 +1,35 @@
+|TC|startDate|insuranceSum|meritRating|damageInsurance|optionalProducts|courtesyCar|redirect|
+|1|1 mês no futuro|valor válido|valor válido|valor válido|1 valor|valor válido|true|
+|2|null|valor válido|valor válido|valor válido|null|valor válido|false|
+|3|null|- please select -|- please select -|- please select -|1 valor|- please select -|false|
+|4|null|valor válido|valor válido|valor válido|todos os valores|valor válido|false|
+|5|1 mês anterior|- please select -|valor válido|- please select -|1 valor|- please select -|false|
+|6|1 mês anterior|valor válido|- please select -|valor válido|todos os valores|valor válido|false|
+|7|1 mês anterior|- please select -|valor válido|- please select -|null|- please select -|false|
+|8|hoje|valor válido|valor válido|valor válido|null|valor válido|false|
+|9|hoje|- please select -|- please select -|- please select -|1 valor|- please select -|false|
+|10|hoje|valor válido|valor válido|valor válido|todos os valores|valor válido|false|
+|11|1 mês no futuro|- please select -|valor válido|- please select -|1 valor|- please select -|false|
+|12|1 mês no futuro|valor válido|- please select -|valor válido|todos os valores|valor válido|false|
+|13|1 mês no futuro|- please select -|valor válido|- please select -|null|- please select -|false|
+|14|30 dias no futuro|valor válido|valor válido|valor válido|null|valor válido|false|
+|15|30 dias no futuro|- please select -|- please select -|- please select -|1 valor|- please select -|false|
+|16|30 dias no futuro|valor válido|valor válido|valor válido|todos os valores|valor válido|false|
+|17|1 ano no futuro|valor válido|- please select -|valor válido|1 valor|valor válido|false|
+|18|1 ano no futuro|- please select -|valor válido|- please select -|todos os valores|- please select -|false|
+|19|1 ano no futuro|valor válido|- please select -|valor válido|null|valor válido|false|
+|20|1 ano no futuro|- please select -|valor válido|- please select -|1 valor|- please select -|false|
+|21|1 ano no futuro|valor válido|- please select -|valor válido|todos os valores|valor válido|false|
+|22|1 ano no futuro|- please select -|valor válido|- please select -|null|- please select -|false|
+|23|ddMMaaaa|- please select -|- please select -|- please select -|null|- please select -|false|
+|24|ddMMaaaa|valor válido|valor válido|valor válido|1 valor|valor válido|false|
+|25|ddMMaaaa|- please select -|- please select -|- please select -|todos os valores|- please select -|false|
+|26|ddMMaaaa|valor válido|valor válido|valor válido|null|valor válido|false|
+|27|ddMMaaaa|- please select -|- please select -|- please select -|1 valor|- please select -|false|
+|28|ddMMaaaa|valor válido|valor válido|valor válido|todos os valores|valor válido|false|
+|29|MM/dd/aaaa|valor válido|- please select -|valor válido|1 valor|valor válido|false|
+|30|MM/dd/aaaa|- please select -|valor válido|- please select -|todos os valores|- please select -|false|
+|31|MM/dd/aaaa|valor válido|- please select -|valor válido|null|valor válido|false|
+|32|MM/dd/aaaa|- please select -|valor válido|- please select -|1 valor|- please select -|false|
+|33|MM/dd/aaaa|valor válido|- please select -|valor válido|todos os valores|valor válido|false|
+|34|MM/dd/aaaa|- please select -|valor válido|- please select -|null|- please select -|false|
