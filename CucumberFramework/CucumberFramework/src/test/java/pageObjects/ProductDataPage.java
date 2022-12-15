@@ -24,49 +24,44 @@ public class ProductDataPage {
 	By insuranceSumDropDown = By.id("insurancesum");
 	By meritRatingDropDown = By.id("meritrating");
 	By damageInsuranceDropDown = By.id("damageinsurance");
-	By euroProtectionCheckBox = By.id("EuroProtection");
-	By legalDefenseInsuranceCheckBox = By.id("LegalDefenseInsurance");
+	By euroProtectionCheckBox = By.xpath("//*[@id=\"insurance-form\"]/div/section[3]/div[5]/p/label[1]");
+	By legalDefenseInsuranceCheckBox = By.xpath("//*[@id=\"insurance-form\"]/div/section[3]/div[5]/p/label[2]");
 	By courtesyCarDropDown = By.id("courtesycar");
 	By nextButton = By.id("nextselectpriceoption");
 	By silverRadioButton = By.id("selectsilver");
 
 	public void informStartDate (String startDate) {
-		LocalDate todayUnformatted = LocalDate.now();
-		DateTimeFormatter dtfMain = DateTimeFormatter.ofPattern("MM/dd/aaaa");
-		LocalDate today = LocalDate.parse(todayUnformatted.format(dtfMain));
-
-		DateTimeFormatter dtf1 = DateTimeFormatter.ofPattern("ddMMaaaa");
-		LocalDate today1 = LocalDate.parse(todayUnformatted.format(dtf1));
-
-		DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("dd/MM/aaaa");
-		LocalDate today2 = LocalDate.parse(todayUnformatted.format(dtf2));
+		LocalDate today = LocalDate.now();
 
 		String startDateToInput = "";
 		if(!startDate.equalsIgnoreCase("null")) {
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+			DateTimeFormatter dtf1 = DateTimeFormatter.ofPattern("ddMMyyyy");
+			DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 			switch(startDate) {
 				case "1 mês anterior":
-					startDateToInput = String.valueOf(today.minus(1L, ChronoUnit.MONTHS));
+					startDateToInput = dtf.format(today.minus(1L, ChronoUnit.MONTHS));
 					break;
 				case "hoje":
-					startDateToInput = String.valueOf(today);
+					startDateToInput = dtf.format(today);
 					break;
 				case "1 mês no futuro":
-					startDateToInput = String.valueOf(today.plus(1L, ChronoUnit.MONTHS));
+					startDateToInput = dtf.format(today.plus(32L, ChronoUnit.DAYS));
 					break;
 				case "30 dias no futuro":
-					startDateToInput = String.valueOf(today.plus(30L, ChronoUnit.DAYS));
+					startDateToInput = dtf.format(today.plus(30L, ChronoUnit.DAYS));
 					break;
 				case "1 ano no futuro":
-					startDateToInput = String.valueOf(today.plus(1L, ChronoUnit.YEARS));
+					startDateToInput = dtf.format(today.plus(1L, ChronoUnit.YEARS));
 					break;
 				case "ddMMaaaa":
-					startDateToInput = String.valueOf(today1);
+					startDateToInput = dtf1.format(today);
 					break;
 				case "MM/dd/aaaa":
-					startDateToInput = String.valueOf(today2);
+					startDateToInput = dtf2.format(today);
 					break;
 			}
-			driver.findElement(startDateField).sendKeys(startDateToInput);
+			driver.findElement(startDateField).sendKeys(String.valueOf(startDateToInput));
 		}
 	}
 	public void selectInsuranceSum (String insuranceSum) {
@@ -117,7 +112,7 @@ public class ProductDataPage {
 		return check;
 	}
 	public void fillProductDataForm() {
-		informStartDate("hoje");
+		informStartDate("1 ano no futuro");
 		selectInsuranceSum("válido");
 		selectMeritRating("válido");
 		selectDamageInsurance("válido");

@@ -7,6 +7,8 @@ import org.openqa.selenium.WebDriver;
 import pageObjects.*;
 import utils.TestContextSetup;
 
+import java.text.ParseException;
+
 import static org.testng.AssertJUnit.assertTrue;
 
 public class SendQuoteStepDefinition {
@@ -29,7 +31,7 @@ public class SendQuoteStepDefinition {
 		this.sendQuotePage = testContextSetup.pageObjectManager.getSendQuotePage();
 	}
 	@Given("usuário selecionar corretamente opção de preço")
-	public void usuário_selecionar_corretamente_opção_de_preço() {
+	public void usuário_selecionar_corretamente_opção_de_preço() throws ParseException {
 		vehicleDataPage.fillVehicleDataForm();
 		insurantDataPage.fillInsurantDataForm();
 		productDataPage.fillProductDataForm();

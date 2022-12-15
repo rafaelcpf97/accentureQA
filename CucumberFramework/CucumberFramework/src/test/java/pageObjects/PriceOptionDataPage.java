@@ -21,10 +21,10 @@ public class PriceOptionDataPage {
 		
 	}
 
-	By silverRadioButton = By.id("selectsilver");
-	By goldRadioButton = By.id("selectgold");
-	By platiniumRadioButton = By.id("selectplatinum");
-	By ultimateRadioButton = By.id("selectultimate");
+	By silverRadioButton = By.xpath("//*[@id=\"priceTable\"]/tfoot/tr/th[2]/label[1]/span");
+	By goldRadioButton = By.xpath("//*[@id=\"priceTable\"]/tfoot/tr/th[2]/label[2]/span");
+	By platiniumRadioButton = By.xpath("//*[@id=\"priceTable\"]/tfoot/tr/th[2]/label[3]/span");
+	By ultimateRadioButton = By.xpath("//*[@id=\"priceTable\"]/tfoot/tr/th[2]/label[4]/span");
 	By viewQuoteButton = By.id("viewquote");
 	By downloadQuoteButton = By.id("downloadquote");
 	By nextButton = By.id("nextsendquote");
@@ -78,7 +78,7 @@ public class PriceOptionDataPage {
 		return check;
 	}
 	public void selectPriceOption() {
-		selectPriceOption("válido");
+		selectPriceOption("silver");
 		clickOnNextButton();
 	}
 	

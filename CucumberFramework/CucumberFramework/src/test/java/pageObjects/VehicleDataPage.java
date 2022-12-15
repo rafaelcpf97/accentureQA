@@ -7,12 +7,17 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Properties;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 public class VehicleDataPage {
 	public WebDriver driver;
@@ -34,10 +39,15 @@ public class VehicleDataPage {
 	By annualMileageField = By.id("annualmileage");
 	By nextButton = By.id("nextenterinsurantdata");
 	By firstNameField = By.id("firstname");
+	By automobiletab = By.id("nav_automobile");
 
 	public Boolean getPage() {
 		Boolean checkCurrentUrl = new WebDriverWait(driver, Duration.ofSeconds(5))
 				.until(ExpectedConditions.urlToBe("http://sampleapp.tricentis.com/101/app.php"));
+		driver.findElement(automobiletab).click();
+		new WebDriverWait(driver, Duration.ofSeconds(5))
+				.until(ExpectedConditions.visibilityOf(driver.findElement(makeDropDown)));
+		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 		Boolean checkVisibilityOfFirstElement = driver.findElement(makeDropDown).isDisplayed();
 		return checkCurrentUrl && checkVisibilityOfFirstElement;
 	}
@@ -52,43 +62,47 @@ public class VehicleDataPage {
 			driver.findElement(enginePerformanceField).sendKeys(enginePerformance);
 		}
 	}
-	public void informDateOfManufacture (String dateOfManufacture) {
-		LocalDate todayUnformatted = LocalDate.now();
-		DateTimeFormatter dtfMain = DateTimeFormatter.ofPattern("dd/MM/aaaa");
-		LocalDate today = LocalDate.parse(todayUnformatted.format(dtfMain));
+	public void informDateOfManufacture (String dateOfManufacture) throws ParseException {
+//		LocalDate todayUnformatted = LocalDate.now();
+//		DateTimeFormatter dtfMain = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+//		LocalDate today = LocalDate.parse(dtfMain.format(todayUnformatted));
 
-		DateTimeFormatter dtf1 = DateTimeFormatter.ofPattern("ddMMaaaa");
-		LocalDate today1 = LocalDate.parse(todayUnformatted.format(dtf1));
-
-		DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("MM/dd/aaaa");
-		LocalDate today2 = LocalDate.parse(todayUnformatted.format(dtf2));
+//		DateTimeFormatter dtf1 = DateTimeFormatter.ofPattern("ddMMyyyy");
+//		LocalDate today1 = LocalDate.parse(dtf1.format(todayUnformatted));
+//
+//		DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+//		LocalDate today2 = LocalDate.parse(dtf2.format(todayUnformatted));
+		LocalDate today = LocalDate.now();
 
 		String dateOfManufactureToInput = "";
 		if(!dateOfManufacture.equalsIgnoreCase("null")) {
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+			DateTimeFormatter dtf1 = DateTimeFormatter.ofPattern("ddMMyyyy");
+			DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 			switch(dateOfManufacture) {
 				case "-50 anos":
-					dateOfManufactureToInput = String.valueOf(today.minus(50L, ChronoUnit.YEARS));
+					dateOfManufactureToInput = dtf.format(today.minus(50L, ChronoUnit.YEARS));
 					break;
 				case "dia anterior":
-					dateOfManufactureToInput = String.valueOf(today.minus(1L, ChronoUnit.DAYS));
+					dateOfManufactureToInput = dtf.format(today.minus(1L, ChronoUnit.DAYS));
 					break;
 				case "hoje":
-					dateOfManufactureToInput = String.valueOf(today);
+					dateOfManufactureToInput = dtf.format(today);
 					break;
 				case "amanhã":
-					dateOfManufactureToInput = String.valueOf(today.plus(1L, ChronoUnit.DAYS));
+					dateOfManufactureToInput = dtf.format(today.plus(1L, ChronoUnit.DAYS));
 					break;
 				case "+50 anos":
-					dateOfManufactureToInput = String.valueOf(today.plus(50L, ChronoUnit.YEARS));
+					dateOfManufactureToInput = dtf.format(today.plus(50L, ChronoUnit.YEARS));
 					break;
 				case "ddMMaaaa":
-					dateOfManufactureToInput = String.valueOf(today1);
+					dateOfManufactureToInput = dtf1.format(today);
 					break;
 				case "MM/dd/aaaa":
-					dateOfManufactureToInput = String.valueOf(today2);
+					dateOfManufactureToInput = dtf2.format(today);
 					break;
 			}
-			driver.findElement(dateOfManufactureField).sendKeys(dateOfManufactureToInput);
+			driver.findElement(dateOfManufactureField).sendKeys(String.valueOf(dateOfManufactureToInput));
 		}
 	}
 	public void selectNumberOfSeats (String numberOfSeats) {
@@ -133,11 +147,11 @@ public class VehicleDataPage {
 		}
 		return check;
 	}
-	public void fillVehicleDataForm() {
+	public void fillVehicleDataForm() throws ParseException {
 		getPage();
 		selectVehicleMaker("válido");
 		informEnginePerformance("1");
-		informDateOfManufacture("hoje");
+		informDateOfManufacture("dia anterior");
 		selectNumberOfSeats("válido");
 		selectFuelType("válido");
 		informListPrice("500");

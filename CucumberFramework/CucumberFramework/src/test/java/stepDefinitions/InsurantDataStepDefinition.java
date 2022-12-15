@@ -8,6 +8,8 @@ import pageObjects.InsurantDataPage;
 import pageObjects.VehicleDataPage;
 import utils.TestContextSetup;
 
+import java.text.ParseException;
+
 import static org.testng.AssertJUnit.assertTrue;
 
 public class InsurantDataStepDefinition {
@@ -23,7 +25,7 @@ public class InsurantDataStepDefinition {
 		this.insurantDataPage = testContextSetup.pageObjectManager.getInsurantDataPage();
 	}
 	@Given("usuário preencheu corretamente o formulário de dados do veículo")
-	public void usuário_preencheu_corretamente_o_formulário_de_dados_do_veículo() {
+	public void usuário_preencheu_corretamente_o_formulário_de_dados_do_veículo() throws ParseException {
 		vehicleDataPage.fillVehicleDataForm();
 	}
 	@When("^usuário informar (.+) primeiro nome$")

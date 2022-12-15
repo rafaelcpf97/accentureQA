@@ -7,6 +7,8 @@ import org.openqa.selenium.WebDriver;
 import pageObjects.VehicleDataPage;
 import utils.TestContextSetup;
 
+import java.text.ParseException;
+
 import static org.testng.AssertJUnit.assertTrue;
 
 public class VehicleDataStepDefinition {
@@ -33,7 +35,7 @@ public class VehicleDataStepDefinition {
 		vehicleDataPage.informEnginePerformance(enginePerformance);
 	}
 	@When("^usuário informar (.+) data de fabricação$")
-	public void usuário_informar_data_de_fabricação(String dateOfManufacture) {
+	public void usuário_informar_data_de_fabricação(String dateOfManufacture) throws ParseException {
 		vehicleDataPage.informDateOfManufacture(dateOfManufacture);
 	}
 	@When("^usuário selecionar (.+) número de bancos$")

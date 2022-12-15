@@ -28,6 +28,8 @@ public class SendQuotePage {
 
 	public void informEmail(String email) {
 		if(!email.equalsIgnoreCase("null")) {
+			WebElement wait = new WebDriverWait(driver, Duration.ofSeconds(15))
+					.until(ExpectedConditions.visibilityOf(driver.findElement(emailField)));
 			driver.findElement(emailField).sendKeys(email);
 		}
 	}

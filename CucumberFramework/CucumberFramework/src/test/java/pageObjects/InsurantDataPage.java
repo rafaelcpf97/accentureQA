@@ -11,6 +11,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.concurrent.TimeUnit;
 
 public class InsurantDataPage {
 	public WebDriver driver;
@@ -23,14 +24,14 @@ public class InsurantDataPage {
 	By firstNameField = By.id("firstname");
 	By lastnameField = By.id("lastname");
 	By dateOfBirthField = By.id("birthdate");
-	By genderMaleRadioButton = By.id("gendermale");
-	By genderFemaleRadioButton = By.id("genderfemale");
+	By genderMaleRadioButton = By.xpath("//*[@id=\"insurance-form\"]/div/section[2]/div[4]/p/label[1]");
+	By genderFemaleRadioButton = By.xpath("//*[@id=\"insurance-form\"]/div/section[2]/div[4]/p/label[2]");
 	By streetAddressField = By.id("streetaddress");
 	By countryDropDown = By.id("country");
 	By zipCodeField = By.id("zipcode");
 	By cityField = By.id("city");
 	By occupationDropDown = By.id("occupation");
-	By hobbiesCheckBox = By.name("Hobbies");
+	By hobbiesCheckBox = By.xpath("//*[@id=\"insurance-form\"]/div/section[2]/div[10]/p/label[1]");
 	By websiteField = By.id("website");
 	By pictureField = By.id("picture");
 	By nextButton = By.id("nextenterproductdata");
@@ -46,49 +47,47 @@ public class InsurantDataPage {
 		}
 	}
 	public void informDateOfBirth (String dateOfBirth) {
-		LocalDate todayUnformatted = LocalDate.now();
-		DateTimeFormatter dtfMain = DateTimeFormatter.ofPattern("dd/MM/aaaa");
-		LocalDate today = LocalDate.parse(todayUnformatted.format(dtfMain));
-
-		DateTimeFormatter dtf1 = DateTimeFormatter.ofPattern("ddMMaaaa");
-		LocalDate today1 = LocalDate.parse(todayUnformatted.format(dtf1));
-
-		DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("MM/dd/aaaa");
-		LocalDate today2 = LocalDate.parse(todayUnformatted.format(dtf2));
-
-		String dateOfBirthToInput = "";
+		LocalDate today = LocalDate.now();
+		String dateOfBirthToInput = null;
 		if(!dateOfBirth.equalsIgnoreCase("null")) {
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+			DateTimeFormatter dtf1 = DateTimeFormatter.ofPattern("ddMMyyyy");
+			DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 			switch(dateOfBirth) {
 				case "71 anos":
-					dateOfBirthToInput = String.valueOf(today.minus(71L, ChronoUnit.YEARS));
+					dateOfBirthToInput = dtf.format(today.minus(71L, ChronoUnit.YEARS));
 					break;
 				case "70 anos":
-					dateOfBirthToInput = String.valueOf(today.minus(70L, ChronoUnit.YEARS));
+					dateOfBirthToInput = dtf.format(today.minus(70L, ChronoUnit.YEARS));
 					break;
 				case "20 anos":
-					dateOfBirthToInput = String.valueOf(today.minus(20L, ChronoUnit.YEARS));
+					dateOfBirthToInput = dtf.format(today.minus(20L, ChronoUnit.YEARS));
 					break;
 				case "18 anos":
-					dateOfBirthToInput = String.valueOf(today.minus(18L, ChronoUnit.YEARS));
+					dateOfBirthToInput = dtf.format(today.minus(18L, ChronoUnit.YEARS));
 					break;
 				case "17 anos":
-					dateOfBirthToInput = String.valueOf(today.minus(17L, ChronoUnit.YEARS));
+					dateOfBirthToInput = dtf.format(today.minus(17L, ChronoUnit.YEARS));
 					break;
 				case "hoje":
-					dateOfBirthToInput = String.valueOf(today);
+					dateOfBirthToInput = dtf.format(today);
 					break;
 				case "ddMMaaaa":
-					dateOfBirthToInput = String.valueOf(today1);
+					dateOfBirthToInput = dtf1.format(today);
 					break;
 				case "MM/dd/aaaa":
-					dateOfBirthToInput = String.valueOf(today2);
+					dateOfBirthToInput = dtf2.format(today);
 					break;
 			}
 			driver.findElement(dateOfBirthField).sendKeys(dateOfBirthToInput);
 		}
 	}
 	public void selectGender(String gender) {
+		driver.findElement(zipCodeField).sendKeys("");
+		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 		if(gender.equalsIgnoreCase("male")) {
+			WebElement wait = new WebDriverWait(driver, Duration.ofSeconds(10))
+					.until(ExpectedConditions.elementToBeClickable(genderMaleRadioButton));
 			driver.findElement(genderMaleRadioButton).click();
 		} else if (gender.equalsIgnoreCase("female")) {
 			driver.findElement(genderFemaleRadioButton).click();
@@ -123,11 +122,10 @@ public class InsurantDataPage {
 	}
 	public void selectHobbies(String hobbies) {
 		if(hobbies.contains("1")) {
-			driver.findElements(hobbiesCheckBox).get(1).click();
+			driver.findElement(hobbiesCheckBox).click();
 		} else if (hobbies.contains("todas")) {
-			Integer hobbiesLength = driver.findElements(hobbiesCheckBox).size();
-			for(int i = 0; i < hobbiesLength; i++) {
-				driver.findElements(hobbiesCheckBox).get(i).click();
+			for(int i = 1; i < 5; i++) {
+				driver.findElement(By.xpath("//*[@id=\"insurance-form\"]/div/section[2]/div[10]/p/label["+i+"]")).click();
 			}
 		}
 	}
@@ -140,19 +138,19 @@ public class InsurantDataPage {
 		if(!picture.equalsIgnoreCase("null")) {
 			switch (picture) {
 				case ".pdf":
-					driver.findElement(pictureField).sendKeys("");
+					driver.findElement(pictureField).sendKeys("Rafael.jpg");
 					break;
 				case ".csv":
-					driver.findElement(pictureField).sendKeys("");
+					driver.findElement(pictureField).sendKeys("Rafael.jpg");
 					break;
 				case ".mp4":
-					driver.findElement(pictureField).sendKeys("");
+					driver.findElement(pictureField).sendKeys("Rafael.jpg");
 					break;
 				case ".jpg 5 MB":
-					driver.findElement(pictureField).sendKeys("");
+					driver.findElement(pictureField).sendKeys("Rafael.jpg");
 					break;
 				case ".jpg 100 MB":
-					driver.findElement(pictureField).sendKeys("");
+					driver.findElement(pictureField).sendKeys("Rafael.jpg");
 					break;
 			}
 		}

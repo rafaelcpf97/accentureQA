@@ -9,6 +9,8 @@ import pageObjects.ProductDataPage;
 import pageObjects.VehicleDataPage;
 import utils.TestContextSetup;
 
+import java.text.ParseException;
+
 import static org.testng.AssertJUnit.assertTrue;
 
 public class ProductDataStepDefinition {
@@ -27,7 +29,7 @@ public class ProductDataStepDefinition {
 		this.productDataPage = testContextSetup.pageObjectManager.getProductDataPage();
 	}
 	@Given("usuário preencheu corretamente o formulário de dados do responsável")
-	public void usuário_preencheu_corretamente_o_formulário_de_dados_do_responsável() {
+	public void usuário_preencheu_corretamente_o_formulário_de_dados_do_responsável() throws ParseException {
 		vehicleDataPage.fillVehicleDataForm();
 		insurantDataPage.fillInsurantDataForm();
 	}
